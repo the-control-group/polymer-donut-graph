@@ -1,0 +1,109 @@
+<link rel="import" href="../polymer/polymer.html">
+<polymer-element name="polymer-donut-graph" attributes="width height series innerSize innerColor chartTitle options">
+	<template>
+		<div id="container" style="width: {{width}}; height: {{height}};"></div>
+	</template>
+	<script src="../highcharts/adapters/standalone-framework.js"></script>
+	<script src="../highcharts/highcharts.js"></script>
+	<script src="../lodash/lodash.js"></script>
+	<script>
+		Polymer({
+			publish: {
+				chart: null,
+				width: 400,
+				height: 400,
+				series: [],
+				options: {},
+				innerColor: null,
+				innerSize: '50%',
+				innerSlices: [],
+				outerSlices: [],
+				total: 0,
+				seriesFormatted: [],
+			},
+			ready: function(event,detail,sender) {
+				var poly = this;
+				poly.async(function() {
+					poly.setSlices();
+					poly.drawChart();
+				});
+			},
+			seriesChanged: function(oldValue,newValue) {
+				var poly = this;
+				if( oldValue != null && poly.chart ) {
+					poly.async(function() {
+						poly.setSlices();
+						poly.drawChart();
+					});
+				}
+			},
+			setSlices: function() {
+				var poly = this;
+				var total = 0;
+				var innerSlices = [];
+				var outerSlices = [];
+				_.each(poly.series, function(series,key) {
+					// Make inner circle
+					innerSlices.push({
+						name: series.group,
+						color: series.color,
+						y: 0,
+					});
+					// Make outer circle
+					_.each(series.data, function(d,k) {
+						if( ! d.color ) {
+							d.color = series.color;
+						}
+						total += d.y;
+						innerSlices[key].y += d.y;
+						outerSlices.push( d );
+					});
+				});
+				poly.total = total;
+				poly.innerSlices = innerSlices;
+				poly.outerSlices = outerSlices;
+			},
+			drawChart: function() {
+				var poly = this;
+				var settings = {
+					chart: {
+						renderTo: poly.$.container,
+						type: 'pie'
+					},
+					credits: {
+						enabled: false
+					},
+					title: {
+						text: null
+					},
+					series: [{
+						name: 'Browsers',
+						data: poly.innerSlices,
+						size: poly.innerSize,
+						dataLabels: {
+							style: {
+								textShadow: '0 0 0 transparent'
+							},
+							color: poly.innerColor,
+							distance: -30
+						}
+					}, {
+						name: 'Versions',
+						data: poly.outerSlices,
+						size: '100%',
+						innerSize: poly.innerSize,
+						dataLabels: {
+							formatter: function () {
+								return this.y > 1 ? '<b>' + this.point.name + ':</b> ' + (this.y * 100 / poly.total).toFixed(2) + '%'  : null;
+							}
+						}
+					}]
+				};
+				if( poly.chartTitle ) {
+					settings.title.text = poly.chartTitle
+				}
+				poly.chart = new Highcharts.Chart(_.extend(settings, poly.options));
+			},
+		});
+	</script>
+</polymer-element>

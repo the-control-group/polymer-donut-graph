@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>polymer-donut-graph demo</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+	<script src="../webcomponentsjs/webcomponents.min.js"></script>
+	<link rel="import" href="polymer-donut-graph.html">
+</head>
+<body unresolved>
+	<polymer-element name="polymer-donut-graph-demo">
+		<template>
+			<polymer-donut-graph
+				series="{{ series }}"
+				innerSize="{{ innerSize }}"
+				innerColor="{{ innerColor }}"
+				chartTitle="{{ chartTitle }}"></polymer-donut-graph>
+		</template>
+		<script src="../lodash/lodash.js"></script>
+		<script>
+			Polymer({
+				publish: {
+					chartTitle: 'polymer-donut-graph-demo',
+					innerSize: '70%',
+					innerColor: '#fff',
+					series: [{
+						group: 'Red',
+						color: '#f00',
+						data: [
+							{
+								name: 'Ruby',
+								y: 5,
+								color: '#600'
+							},
+							{
+								name: 'Rose',
+								y: 3,
+								color: '#fcc'
+							},
+							{
+								name: 'Defaulting Color',
+								y: 2
+							}
+						]
+					}, {
+						group: 'Blue',
+						color: '#00f',
+						data: [
+							{
+								name: 'Sky',
+								y: 5,
+								color: '#0cf'
+							},
+							{
+								name: 'Navy',
+								y: 3,
+								color: '#006'
+							}
+						]
+					}]
+				},
+			});
+		</script>
+	</polymer-element></polymer-element>
+	<polymer-donut-graph-demo></polymer-donut-graph-demo>
+</body>
+</html>

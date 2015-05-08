@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>polymer-donut-graph tests</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+	<script src="../../webcomponentsjs/webcomponents.js"></script>
+	<script src="../../web-component-tester/browser.js"></script>
+	<script src="../../jquery/dist/jquery.min.js"></script>
+	<script src="../../lodash/lodash.js"></script>
+	<link rel="import" href="../polymer-donut-graph.html">
+</head>
+<body unresolved>
+	<polymer-donut-graph
+		series='[{
+			"group": "Red",
+			"color": "#f00",
+			"data": [
+				{
+					"name": "Ruby",
+					"y": 5,
+					"color": "#600"
+				},
+				{
+					"name": "Defaulting Color",
+					"y": 5
+				}
+			]
+		}, {
+			"group": "Blue",
+			"color": "#00f",
+			"data": [
+				{
+					"name": "Sky",
+					"y": 10,
+					"color": "#0cf"
+				}
+			]
+		}]'
+		chartTitle="Test Title"></polymer-donut-graph>
+	<script>
+		window.addEventListener('polymer-ready', function(e) {
+			var el = document.querySelector('polymer-donut-graph');
+			var container = el.$.container;
+			var title = $( container.querySelector('.highcharts-title tspan') ).html();
+
+			suite('<polymer-donut-graph>', function () {
+				test('initializes', function () {
+					assert(el._readied);
+				});
+				test('has Title binding', function () {
+					assert.equal( title, 'Test Title');
+				});
+			});
+		});
+	</script>
+</body>
+</html>
