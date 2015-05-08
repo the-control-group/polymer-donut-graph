@@ -1,97 +1,116 @@
-# polymer-spline-graph
+# polymer-donut-graph
 
 **This element is compatible with Polymer 0.5.**
 
 __Example:__
 
 ```
-	<polymer-element name="polymer-spline-graph-demo">
+	<polymer-element name="polymer-donut-graph-demo">
 		<template>
-			<polymer-spline-graph
-				chartTitle="Spline Chart Demo"
-				categories="{{ categories }}"
+			<polymer-donut-graph
 				series="{{ series }}"
-				zoneLength="{{ zoneLength }}" ></polymer-spline-graph>
+				innerSize="{{ innerSize }}"
+				innerColor="{{ innerColor }}"
+				chartTitle="{{ chartTitle }}"></polymer-donut-graph>
 		</template>
 		<script src="../lodash/lodash.js"></script>
 		<script>
 			Polymer({
 				publish: {
-					categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-					series: [
-						{
-							name: 'Line 1',
-							data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-						}, {
-							name: 'Line 2',
-							data: [54.4, 29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6]
-						}
-					],
-					zoneLength: 8,
-				}
+					chartTitle: 'polymer-donut-graph-demo',
+					innerSize: '70%',
+					innerColor: '#fff',
+					series: [{
+						group: 'Red',
+						color: '#f00',
+						data: [
+							{
+								name: 'Ruby',
+								y: 5,
+								color: '#600'
+							},
+							{
+								name: 'Rose',
+								y: 3,
+								color: '#fcc'
+							},
+							{
+								name: 'Defaulting Color',
+								y: 2
+							}
+						]
+					}, {
+						group: 'Blue',
+						color: '#00f',
+						data: [
+							{
+								name: 'Sky',
+								y: 5,
+								color: '#0cf'
+							},
+							{
+								name: 'Navy',
+								y: 3,
+								color: '#006'
+							}
+						]
+					}]
+				},
 			});
 		</script>
 	</polymer-element></polymer-element>
-	<polymer-spline-graph-demo></polymer-spline-graph-demo>
+	<polymer-donut-graph-demo></polymer-donut-graph-demo>
 ```
-
-# General Attributes
 
 ### `series`
 
 Array of objects containing name and data points.
 ```
-[
-	{
-		name: 'Line 1',
-		data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-	}, {
-		name: 'Line 2',
-		data: [54.4, 29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6]
-	}
-]
+[{
+	group: 'Red',
+	color: '#f00',
+	data: [
+		{
+			name: 'Ruby',
+			y: 5,
+			color: '#600'
+		},
+		{
+			name: 'Rose',
+			y: 3,
+			color: '#fcc'
+		},
+		{
+			name: 'Defaulting Color',
+			y: 2
+		}
+	]
+}, {
+	group: 'Blue',
+	color: '#00f',
+	data: [
+		{
+			name: 'Sky',
+			y: 5,
+			color: '#0cf'
+		},
+		{
+			name: 'Navy',
+			y: 3,
+			color: '#006'
+		}
+	]
+}]
 ```
 
 ### `chartTitle`
 
 Title displayed above graph. Default `null`
 
-### `yAxisTitle`
+### `innerSize`
 
-Title displayed left of graph. Default `null`
+Size of the inner circle compared to outer circle. Default `'50%'`
 
-### `width`
+### `innerColor`
 
-Container width. Default `400`
-
-### `height`
-
-Container width. Default `400`
-
-### `options`
-
-Object to extend highcarts
-
-# Spline Graph
-
-### `categories`
-
-Labels below x axis
-
-### `zoneLength`
-
-Break point along the x axis where the solid line becomes dotted. Default `null`
-
-# Live Spline Graph
-
-### `onLoad`
-
-Function getting adding new data to the series.
-
-### `timezoneOffset`
-
-Timezone offset. Example PST is `8`
-
-### `xAxislInterval`
-
-The approximate pixel interval of the tick marks.
+Color of the inner circle labels
